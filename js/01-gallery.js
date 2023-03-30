@@ -4,7 +4,7 @@ const galleryEl = document.querySelector('.gallery');
 
 for (const image of galleryItems) {
   const listEl = `<div class="gallery__item">
-    <a class="gallery__link" href="large-image.jpg">
+    <a class="gallery__link" href="${image.original}">
       <img
         class="gallery__image"
         src=${image.preview}
@@ -17,3 +17,14 @@ for (const image of galleryItems) {
   galleryEl.insertAdjacentHTML('beforeend', listEl);
   galleryEl.addEventListener('click', e => e.preventDefault());
 }
+
+galleryEl.addEventListener('click', e => {
+  const instance = basicLightbox.create(`<img src=${e.target.dataset.source}>`);
+  instance.show();
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' || 'Space') {
+      instance.close();
+    }
+  });
+});
